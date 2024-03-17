@@ -3,7 +3,7 @@ package com.patika.kredinbizdenservice.model;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class CreditCard implements Product{
+public class CreditCard implements Product {
 
     private BigDecimal fee;
     private List<Campaign> campaignList;

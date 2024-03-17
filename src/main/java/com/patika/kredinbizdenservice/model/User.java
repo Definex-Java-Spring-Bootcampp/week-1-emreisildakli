@@ -1,7 +1,11 @@
 package com.patika.kredinbizdenservice.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class User {
 
@@ -19,9 +23,10 @@ public class User {
         this.surname = surname;
         this.birthDate = birthDate;
         this.email = email;
-        this.password = password;
+        this.password = this.hashPassword(password, "salt");
         this.phoneNumber = phoneNumber;
         this.isActive = isActive;
+        this.applicationList = new ArrayList<>();
     }
 
     public User(String name, String surname, String email, String password, String phoneNumber, Boolean isActive) {
@@ -31,6 +36,40 @@ public class User {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.isActive = isActive;
+    }
+
+    private String hashPassword(String passwordToHash, String salt) {
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+            md.update(salt.getBytes(StandardCharsets.UTF_8));
+            byte[] bytes = md.digest(passwordToHash.getBytes(StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        return generatedPassword;
+    }
+
+    public void addApplication(Application application) {
+        this.applicationList.add(application);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", birthDate=" + birthDate +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", isActive=" + isActive +
+                '}';
     }
 
     public String getName() {

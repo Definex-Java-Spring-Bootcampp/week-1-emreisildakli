@@ -6,15 +6,13 @@ import com.patika.kredinbizdenservice.enums.ApplicationStatus;
 import java.time.LocalDateTime;
 
 public class Application {
-
     private Loan loan;
     private Product product;
     private User user;
     private LocalDateTime localDateTime;
     private ApplicationStatus applicationStatus;
 
-    private Application() {
-    }
+
 
     /*
     public Application(CreditCard creditCard, User user, LocalDateTime localDateTime) {
@@ -38,8 +36,16 @@ public class Application {
         this.applicationStatus = ApplicationStatus.INITIAL;
     }
 
+    public static void main(String[] args) {
+        System.out.println("asd");
+    }
+
     public Loan getLoan() {
         return loan;
+    }
+
+    public Product getProduct() {
+        return this.product;
     }
 
     public void setLoan(Loan loan) {
